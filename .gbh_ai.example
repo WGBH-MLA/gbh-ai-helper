@@ -1,0 +1,9 @@
+# Azure OpenAI Credentials
+AZURE_OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXX
+AZURE_OPENAI_ENDPOINT=https://ADDRESS/OF/YOUR/ENDPOINT
+OPENAI_API_VERSION=2025-04-01-preview
+
+# Deployment Names (as defined in Azure AI Studio)
+
+# MODEL ID: azureml://registries/azure-openai/models/gpt-4.1-mini/versions/2025-04-14
+DEPLOY_GPT41MINI=mla-gpt-4.1-mini

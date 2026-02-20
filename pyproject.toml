@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gbh-ai-helper"
+version = "0.0.2"
+description = "Python routines for using GBH-provided AI resources"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+dependencies = [
+    "openai>=1.109.1",
+    "python-dotenv==1.2.1"
+]
+
+[project.scripts]
+gbh_ai_helper_test = "gbh_ai_helper.single_round:main"
+
+[project.urls]
+"Homepage" = "https://github.com/WGBH-MLA/gbh-ai-helper"
+"Source" = "https://github.com/WGBH-MLA/gbh-ai-helper"
+
+[tool.setuptools.packages.find]
+include = ["gbh_ai_helper"]
