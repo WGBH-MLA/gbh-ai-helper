@@ -64,6 +64,39 @@ def analyze_sample( instruction:str,
     return response_content
 
 
+def one_completion( user_prompt:str,
+                    system_prompt:str=DEFAULT_SYSTEM_PROMPT,
+                    max_tokens:int=150,
+                    client=None,
+                    deployment_key="DEPLOY_GPT41MINI" ) -> str:
+    """Given a user prompt and a system prompt, it returns one completion 
+    response."""
+
+    # lazy client initialization
+    global _default_client
+    if client is None:
+        if _default_client is None:
+            _default_client = get_client()
+        client = _default_client
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt} ]
+
+    deployment_name = os.getenv(deployment_key)
+
+    # Use the chat.completions API
+    response = client.chat.completions.create(
+        model=deployment_name,
+        messages=messages,
+        max_completion_tokens=max_tokens,
+        temperature=0.5 )
+    response_content = response.choices[0].message.content
+
+    return response_content
+
+
+
 def run_test():
     client = get_client()
 

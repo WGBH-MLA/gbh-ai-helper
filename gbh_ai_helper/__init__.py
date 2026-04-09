@@ -9,10 +9,10 @@ try:
 except ModuleNotFoundError:
     __version__ = "local"
 
-from .single_round import analyze_sample, get_client
+from .single_round import analyze_sample, one_completion, get_client
 
 # minimal package-level API
-__all__ = [ analyze_sample, get_client ]
+__all__ = [ analyze_sample, one_completion, get_client ]
 
 # load creds into the env as soon as package is imported
 creds_path = os.path.expanduser("~/.gbh_ai")
