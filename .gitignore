@@ -1,1 +1,4 @@
 gbh_ai_helper.egg-info
+**/__pycache__/
+*.pyc
+
