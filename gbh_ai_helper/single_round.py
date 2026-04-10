@@ -18,6 +18,9 @@ Your response must be the answer ONLY.
 If you cannot definitively determine a single answer, then you must respond by saying 'NO ANSWER'
 """
 
+DEFAULT_DEPLOYMENT_ALIAS = "DEPLOY_DEFAULT"
+
+
 def get_client():
     """
     Client is initialized using the values of environment varaibles.
@@ -25,14 +28,17 @@ def get_client():
     client = AzureOpenAI()
     return client
 
+
+# client will be initialized only lazily
 _default_client = None
+
 
 def analyze_sample( instruction:str,
                     sample:str,
                     system_prompt:str=DEFAULT_SYSTEM_PROMPT,
                     max_tokens:int=150,
                     client=None,
-                    deployment_key="DEPLOY_GPT41MINI" ) -> str:
+                    deployment_alias=DEFAULT_DEPLOYMENT_ALIAS ) -> str:
     """Given an instruction and some text for analysis, it performs the analysis 
     and returns the result."""
 
@@ -51,7 +57,7 @@ def analyze_sample( instruction:str,
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": full_user_prompt} ]
 
-    deployment_name = os.getenv(deployment_key)
+    deployment_name = os.getenv(deployment_alias)
 
     # Use the chat.completions API
     response = client.chat.completions.create(
@@ -68,7 +74,7 @@ def one_completion( user_prompt:str,
                     system_prompt:str=DEFAULT_SYSTEM_PROMPT,
                     max_tokens:int=150,
                     client=None,
-                    deployment_key="DEPLOY_GPT41MINI" ) -> str:
+                    deployment_alias=DEFAULT_DEPLOYMENT_ALIAS ) -> str:
     """Given a user prompt and a system prompt, it returns one completion 
     response."""
 
@@ -83,7 +89,7 @@ def one_completion( user_prompt:str,
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt} ]
 
-    deployment_name = os.getenv(deployment_key)
+    deployment_name = os.getenv(deployment_alias)
 
     # Use the chat.completions API
     response = client.chat.completions.create(

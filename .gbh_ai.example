@@ -7,3 +7,7 @@ OPENAI_API_VERSION=2025-04-01-preview
 
 # MODEL ID: azureml://registries/azure-openai/models/gpt-4.1-mini/versions/2025-04-14
 DEPLOY_GPT41MINI=mla-gpt-4.1-mini
+
+# MODEL ID: azureml://registries/azure-openai/models/gpt-4.1-mini/versions/2025-04-14
+DEPLOY_DEFAULT=mla-gpt-4.1-mini
+
