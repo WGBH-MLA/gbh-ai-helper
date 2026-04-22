@@ -20,6 +20,7 @@ If you cannot definitively determine a single answer, then you must respond by s
 
 DEFAULT_DEPLOYMENT_ALIAS = "DEPLOY_DEFAULT"
 
+DEFAULT_TEMPERATURE = 0.3
 
 def get_client():
     """
@@ -37,6 +38,7 @@ def analyze_sample( instruction:str,
                     sample:str,
                     system_prompt:str=DEFAULT_SYSTEM_PROMPT,
                     max_tokens:int=150,
+                    temperature=DEFAULT_TEMPERATURE,
                     client=None,
                     deployment_alias=DEFAULT_DEPLOYMENT_ALIAS ) -> str:
     """Given an instruction and some text for analysis, it performs the analysis 
@@ -59,13 +61,17 @@ def analyze_sample( instruction:str,
 
     deployment_name = os.getenv(deployment_alias)
 
-    # Use the chat.completions API
-    response = client.chat.completions.create(
-        model=deployment_name,
-        messages=messages,
-        max_completion_tokens=max_tokens,
-        temperature=0.5 )
-    response_content = response.choices[0].message.content
+    if deployment_name:
+        # Use the chat.completions API
+        response = client.chat.completions.create(
+            model=deployment_name,
+            messages=messages,
+            max_completion_tokens=max_tokens,
+            temperature=temperature )
+        response_content = response.choices[0].message.content
+    else:
+        print(f"Error: No deployment associated with alias `{deployment_alias}`")
+        response_content = None
 
     return response_content
 
@@ -73,6 +79,7 @@ def analyze_sample( instruction:str,
 def one_completion( user_prompt:str,
                     system_prompt:str=DEFAULT_SYSTEM_PROMPT,
                     max_tokens:int=150,
+                    temperature=DEFAULT_TEMPERATURE,
                     client=None,
                     deployment_alias=DEFAULT_DEPLOYMENT_ALIAS ) -> str:
     """Given a user prompt and a system prompt, it returns one completion 
@@ -91,13 +98,17 @@ def one_completion( user_prompt:str,
 
     deployment_name = os.getenv(deployment_alias)
 
-    # Use the chat.completions API
-    response = client.chat.completions.create(
-        model=deployment_name,
-        messages=messages,
-        max_completion_tokens=max_tokens,
-        temperature=0.5 )
-    response_content = response.choices[0].message.content
+    if deployment_name:
+        # Use the chat.completions API
+        response = client.chat.completions.create(
+            model=deployment_name,
+            messages=messages,
+            max_completion_tokens=max_tokens,
+            temperature=temperature )
+        response_content = response.choices[0].message.content
+    else:
+        print(f"Error: No deployment associated with alias `{deployment_alias}`")
+        response_content = None
 
     return response_content
 
